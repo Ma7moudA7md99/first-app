@@ -1,12 +1,27 @@
-// import logo from "./logo.svg";
+import { useState } from "react";
 import "./App.css";
-// import MyButton from "./MyButton";
-// import MyInput from "./MyInput";
-import MyForm from "./MyForm";
 
 function App() {
+  const [inputValue, setInputValue] = useState("");
+  const [devices, setDevices] = useState(["apple", "mac", "samsung", "hp"]);
+  const devicesList = devices.map((device) => {
+    return <li>{device}</li>;
+  });
+
+  function handleClick() {
+    // ### this will not work because we are creating a pointer(newDevices) to the same array(devices)
+    // const newDevices = devices;
+    // newDevices.push(inputValue);
+    // setDevices(newDevices);
+    // ### this will work because we are creating a new parameter(newDevices) separated from the old(devices)
+    // const newDevices = [...devices];
+    // newDevices.push(inputValue);
+    // setDevices(newDevices);
+    // short way for this process
+    setDevices([...devices, inputValue]);
+  }
   return (
-    <div className="App" style={{ paddingTop: "200px" }}>
+    <div className="App" style={{ paddingTop: "200px", fontSize: "2rem" }}>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -23,7 +38,14 @@ function App() {
         <MyButton />
         <MyInput />
       </header> */}
-      <MyForm />
+      <div>{devicesList}</div>
+      <input
+        value={inputValue}
+        onChange={(event) => {
+          setInputValue(event.target.value);
+        }}
+      />
+      <button onClick={handleClick}>Add</button>
     </div>
   );
 }
