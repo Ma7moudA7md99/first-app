@@ -1,14 +1,51 @@
 import { useState } from "react";
 import "./App.css";
 
+let nextId = 5;
 function App() {
   const [inputValue, setInputValue] = useState("");
-  const [devices, setDevices] = useState(["apple", "mac", "samsung", "hp"]);
+  const [devices, setDevices] = useState([
+    { id: 1, name: "apple" },
+    { id: 2, name: "mac" },
+    { id: 3, name: "samsung" },
+    { id: 4, name: "hp" },
+  ]);
   const devicesList = devices.map((device) => {
-    return <li>{device}</li>;
+    return (
+      <li key={device.id}>
+        {device.name}{" "}
+        <button
+          onClick={() => {
+            handleDelClick(device.id);
+          }}
+        >
+          Delete
+        </button>
+      </li>
+    );
   });
+  function handleDelClick(id) {
+    // const oldDevices = [...devices];
+    // let index = 0,
+    //   selectedIndex = 0;
+    // for (let device of oldDevices) {
+    //   if (device.id === id) {
+    //     selectedIndex = index;
+    //   }
+    //   index++;
+    // }
+    // oldDevices.splice(selectedIndex, 1);
+    const oldDevices = devices.filter((device) => {
+      // if (device.id === id) return false;
+      // return true;
 
-  function handleClick() {
+      // return device.id !== id;
+
+      return device.id === id ? false : true;
+    });
+    setDevices(oldDevices);
+  }
+  function handleAddClick() {
     // ### this will not work because we are creating a pointer(newDevices) to the same array(devices)
     // const newDevices = devices;
     // newDevices.push(inputValue);
@@ -18,7 +55,8 @@ function App() {
     // newDevices.push(inputValue);
     // setDevices(newDevices);
     // short way for this process
-    setDevices([...devices, inputValue]);
+    setDevices([...devices, { id: nextId, name: inputValue }]);
+    nextId = nextId + 1;
   }
   return (
     <div className="App" style={{ paddingTop: "200px", fontSize: "2rem" }}>
@@ -45,7 +83,7 @@ function App() {
           setInputValue(event.target.value);
         }}
       />
-      <button onClick={handleClick}>Add</button>
+      <button onClick={handleAddClick}>Add</button>
     </div>
   );
 }
