@@ -7,6 +7,8 @@ function MyForm() {
     age: "",
     generalInfo: "",
     isStudent: false,
+    country: "EGY",
+    status: "",
   });
   return (
     <form
@@ -35,6 +37,7 @@ function MyForm() {
           setFormInputs({ ...formInputs, email: event.target.value });
         }}
       />
+      <hr />
       <label>Age </label>
       <input
         value={formInputs.age}
@@ -64,6 +67,40 @@ function MyForm() {
           setFormInputs({ ...formInputs, isStudent: event.target.checked });
         }}
       />
+      <hr />
+      <select
+        value={formInputs.country}
+        onChange={(event) => {
+          setFormInputs({ ...formInputs, country: event.target.value });
+        }}
+      >
+        <option>KSA</option>
+        <option>EGY</option>
+        <option>SYR</option>
+      </select>
+      <hr />
+      <div>
+        <input
+          type="radio"
+          name="status"
+          value="student"
+          checked={formInputs.status === "student"}
+          onChange={(event) => {
+            setFormInputs({ ...formInputs, status: event.target.value });
+          }}
+        />
+        Student
+        <input
+          type="radio"
+          name="status"
+          value="teacher"
+          checked={formInputs.status === "teacher"}
+          onChange={(event) => {
+            setFormInputs({ ...formInputs, status: event.target.value });
+          }}
+        />
+        Teacher
+      </div>
       <hr />
       <button
         onClick={() => {
